@@ -1,0 +1,75 @@
+﻿<Window x:Class="FinanceManager.WPF.Presentation.Views.LoginView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:materialDesign="http://materialdesigninxaml.net/winfx/xaml/themes"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:vm="clr-namespace:FinanceManager.WPF.Presentation.ViewModels"
+        xmlns:res="clr-namespace:FinanceManager.WPF.Resources"
+        WindowStartupLocation="CenterScreen"
+        ResizeMode="NoResize"
+        Style="{StaticResource MaterialDesignWindow}"
+        d:DataContext="{d:DesignInstance Type=vm:LoginViewModel}"
+        mc:Ignorable="d"
+        Title="Login"
+        Height="290"
+        Width="450">
+
+    <Window.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="pack://application:,,,/FinanceManager.WPF;Component/ViewResources/CommonResources.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+        </ResourceDictionary>
+    </Window.Resources>
+
+    <Grid>
+
+        <StackPanel Margin="16">
+
+            <!-- Email Field -->
+            <TextBox x:Name="txtEmail"
+                     Text="{Binding Email, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged, ValidatesOnNotifyDataErrors=True}"
+                     materialDesign:HintAssist.Hint="{x:Static res:CommonResources.Email}"
+                     Style="{StaticResource MaterialDesignOutlinedTextBox}" />
+
+            <!-- Password Field -->
+            <PasswordBox x:Name="txtPassword"
+                         PasswordChanged="PasswordBox_PasswordChanged"
+                         materialDesign:HintAssist.Hint="{x:Static res:CommonResources.Password}"
+                         Margin="0,28,0,0"
+                         Style="{StaticResource MaterialDesignOutlinedPasswordBox}" />
+
+            <WrapPanel Margin="0,24,0,0" HorizontalAlignment="Center">
+
+                <!-- Login Button -->
+                <Button x:Name="btnLogin"
+                        Content="{x:Static res:CommonResources.Login}"
+                        Command="{Binding LoginCommand}"
+                        Style="{StaticResource MaterialDesignRaisedButton}"
+                        Foreground="White" />
+
+                <!-- Register Button -->
+                <Button x:Name="btnRegister"
+                        Content="{x:Static res:CommonResources.Register}"
+                        Command="{Binding RegisterCommand}"
+                        Margin="8,0,0,0"
+                        Style="{StaticResource MaterialDesignRaisedButton}"
+                        Foreground="White" />
+
+            </WrapPanel>
+
+            <!-- Error Message -->
+            <TextBlock Text="{Binding ErrorMessage, Mode=TwoWay}"
+                       Foreground="IndianRed"
+                       Margin="0,12,0,0"
+                       Visibility="{Binding IsLoginFailed, Converter={StaticResource BooleanToVisibilityConverter}}"
+                       VerticalAlignment="Center"
+                       Style="{StaticResource MaterialDesignButtonTextBlock}"
+                       HorizontalAlignment="Center" />
+
+        </StackPanel>
+
+    </Grid>
+
+</Window>
