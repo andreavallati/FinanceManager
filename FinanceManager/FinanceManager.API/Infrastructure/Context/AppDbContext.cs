@@ -103,7 +103,7 @@ namespace FinanceManager.API.Infrastructure.Context
                         Id = 2,
                         UserId = 2,
                         Amount = 45.50m,
-                        Type = TransactionType.Income,
+                        Type = TransactionType.Expense,
                         Category = "Groceries",
                         Date = DateTime.UtcNow.AddDays(-2),
                         Notes = "Weekly groceries"

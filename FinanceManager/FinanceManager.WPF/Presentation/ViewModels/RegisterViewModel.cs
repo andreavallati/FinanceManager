@@ -131,7 +131,26 @@ namespace FinanceManager.WPF.Presentation.ViewModels
                     Name = Name,
                     Email = Email,
                     Password = Password,
-                    Role = SelectedUserRole
+                    Role = SelectedUserRole,
+                    Transactions = new List<Transaction>
+                    {
+                        new Transaction
+                        {
+                            Amount = 1750.00m,
+                            Type = TransactionType.Income,
+                            Category = "Salary",
+                            Date = DateTime.UtcNow.AddDays(-7),
+                            Notes = "Monthly paycheck"
+                        },
+                        new Transaction
+                        {
+                            Amount = 75.50m,
+                            Type = TransactionType.Expense,
+                            Category = "Groceries",
+                            Date = DateTime.UtcNow.AddDays(-3),
+                            Notes = "Weekly groceries"
+                        }
+                    }
                 };
 
                 var apiResponse = await _factoryUIService.CreateUIService<UserUIService>()

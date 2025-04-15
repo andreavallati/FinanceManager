@@ -14,6 +14,7 @@ namespace FinanceManager.WPF.Application.Validation
 
             RuleFor(user => user.Email)
                 .NotEmpty().WithMessage("Email is required.")
+                .MaximumLength(150).WithMessage("Email must not exceed 150 characters.")
                 .EmailAddress().WithMessage("A valid email is required.");
 
             RuleFor(user => user.Password)

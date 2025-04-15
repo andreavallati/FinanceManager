@@ -9,6 +9,7 @@ namespace FinanceManager.API.Application.Mapping
         public FinanceManagerProfile()
         {
             CreateMap<User, UserDto>().ReverseMap();
+            CreateMap<Transaction, TransactionDto>().ReverseMap();
         }
     }
 }

@@ -68,17 +68,17 @@ namespace FinanceManager.API.Extensions
 
         public static void InjectValidators(this IServiceCollection services)
         {
-            services.AddScoped<IValidator<User>, UserValidator>();
+            services.AddTransient<IValidator<User>, UserValidator>();
         }
 
         public static void InjectServices(this IServiceCollection services)
         {
-            services.AddScoped<IUserService, UserService>();
+            services.AddTransient<IUserService, UserService>();
         }
 
         public static void InjectRepositories(this IServiceCollection services)
         {
-            services.AddScoped<IUserRepository, UserRepository>();
+            services.AddTransient<IUserRepository, UserRepository>();
         }
     }
 }

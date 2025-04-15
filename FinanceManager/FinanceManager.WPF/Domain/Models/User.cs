@@ -9,5 +9,7 @@ namespace FinanceManager.WPF.Domain.Models
         public string? Email { get; set; } = string.Empty;
         public string? Password { get; set; } = string.Empty;
         public UserRole Role { get; set; } = UserRole.Standard;
+
+        public ICollection<Transaction> Transactions { get; set; } = [];
     }
 }

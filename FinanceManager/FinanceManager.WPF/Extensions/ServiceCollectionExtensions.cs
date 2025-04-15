@@ -22,26 +22,26 @@ namespace FinanceManager.WPF.Extensions
 
         public static void InjectValidators(this IServiceCollection services)
         {
-            services.AddScoped<IValidator<LoginViewModel>, LoginValidator>();
-            services.AddScoped<IValidator<RegisterViewModel>, UserValidator>();
+            services.AddTransient<IValidator<LoginViewModel>, LoginValidator>();
+            services.AddTransient<IValidator<RegisterViewModel>, UserValidator>();
         }
 
         public static void InjectUIServices(this ServiceCollection services)
         {
             services.AddSingleton<IFactoryUIService, FactoryUIService>();
-            services.AddScoped<AuthUIService>();
-            services.AddScoped<UserUIService>();
+            services.AddTransient<AuthUIService>();
+            services.AddTransient<UserUIService>();
         }
 
         public static void InjectViewModels(this ServiceCollection services)
         {
-            services.AddScoped<ILoginViewModel, LoginViewModel>();
-            services.AddScoped<IRegisterViewModel, RegisterViewModel>();
+            services.AddTransient<ILoginViewModel, LoginViewModel>();
+            services.AddTransient<IRegisterViewModel, RegisterViewModel>();
         }
 
         public static void InjectViews(this ServiceCollection services)
         {
-            services.AddScoped<LoginView>();
+            services.AddSingleton<LoginView>();
             services.AddTransient<RegisterView>();
         }
     }
