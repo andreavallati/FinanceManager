@@ -2,7 +2,7 @@
 using FinanceManager.Shared.Application.Requests;
 using FinanceManager.WPF.Application.Interfaces.Services.Factory;
 using FinanceManager.WPF.Application.Services;
-using FinanceManager.WPF.Presentation.Interfaces;
+using FinanceManager.WPF.Presentation.Interfaces.ViewModels;
 using FinanceManager.WPF.Presentation.ViewModels.Base;
 using FinanceManager.WPF.Presentation.Views;
 using FinanceManager.WPF.Resources;
@@ -10,7 +10,9 @@ using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
+using System.Windows;
 using System.Windows.Input;
+using BaseApplication = System.Windows.Application;
 
 namespace FinanceManager.WPF.Presentation.ViewModels
 {
@@ -108,10 +110,20 @@ namespace FinanceManager.WPF.Presentation.ViewModels
                     return;
                 }
 
-                SessionManager.SetSession(apiResponse.Item?.Token ?? string.Empty, Email);
+                SessionManager.SetSession(apiResponse.Item?.Token ?? string.Empty,
+                                          apiResponse.Item?.UserId ?? long.MinValue,
+                                          apiResponse.Item?.Username ?? string.Empty,
+                                          apiResponse.Item?.Role ?? Shared.Enums.UserRole.Standard);
 
                 ErrorMessage = string.Empty;
                 IsLoginFailed = false;
+
+                var dashboardView = _serviceProvider.GetRequiredService<DashboardView>();
+                dashboardView.Show();
+
+                BaseApplication.Current.Windows.OfType<Window>()
+                                               .FirstOrDefault(w => w is LoginView)?
+                                               .Close();
 
                 _logger.LogInformation($"LoginAsync() properly terminated");
             }
@@ -135,7 +147,8 @@ namespace FinanceManager.WPF.Presentation.ViewModels
             {
                 _logger.LogInformation($"Register() called");
 
-                _serviceProvider.GetRequiredService<RegisterView>().ShowDialog();
+                var registerView = _serviceProvider.GetRequiredService<RegisterView>();
+                registerView.ShowDialog();
 
                 _logger.LogInformation($"Register() properly terminated");
             }

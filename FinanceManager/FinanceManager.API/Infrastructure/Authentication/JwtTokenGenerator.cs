@@ -36,9 +36,13 @@ namespace FinanceManager.API.Infrastructure.Authentication
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_clientSecret));
             var credentials = new SigningCredentials(key, SecurityAlgorithms.HmacSha256);
             var token = new JwtSecurityToken(claims: claims, expires: DateTime.UtcNow.AddHours(1), signingCredentials: credentials);
+
             var tokenResponse = new TokenResponse
             {
-                Token = new JwtSecurityTokenHandler().WriteToken(token)
+                Token = new JwtSecurityTokenHandler().WriteToken(token),
+                UserId = user.Id,
+                Username = user.Email ?? string.Empty,
+                Role = user.Role
             };
 
             return tokenResponse;

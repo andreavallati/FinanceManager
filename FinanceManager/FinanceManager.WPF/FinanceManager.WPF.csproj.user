@@ -7,15 +7,33 @@
     </ApplicationDefinition>
   </ItemGroup>
   <ItemGroup>
+    <Compile Update="Presentation\Views\AdminView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Presentation\Views\DashboardView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
     <Compile Update="Presentation\Views\RegisterView.xaml.cs">
+      <SubType>Code</SubType>
+    </Compile>
+    <Compile Update="Presentation\Views\StandardView.xaml.cs">
       <SubType>Code</SubType>
     </Compile>
   </ItemGroup>
   <ItemGroup>
+    <Page Update="Presentation\Views\AdminView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Presentation\Views\DashboardView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
     <Page Update="Presentation\Views\LoginView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="Presentation\Views\RegisterView.xaml">
+      <SubType>Designer</SubType>
+    </Page>
+    <Page Update="Presentation\Views\StandardView.xaml">
       <SubType>Designer</SubType>
     </Page>
     <Page Update="ViewResources\CommonResources.xaml">

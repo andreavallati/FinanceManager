@@ -4,9 +4,11 @@ using FinanceManager.WPF.Application.Services;
 using FinanceManager.WPF.Application.Services.Factory;
 using FinanceManager.WPF.Application.Validation;
 using FinanceManager.WPF.Infrastructure.Connectors;
-using FinanceManager.WPF.Presentation.Interfaces;
+using FinanceManager.WPF.Presentation.Interfaces.Factory;
+using FinanceManager.WPF.Presentation.Interfaces.ViewModels;
 using FinanceManager.WPF.Presentation.ViewModels;
 using FinanceManager.WPF.Presentation.Views;
+using FinanceManager.WPF.Presentation.Views.Factory;
 using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 
@@ -37,12 +39,19 @@ namespace FinanceManager.WPF.Extensions
         {
             services.AddTransient<ILoginViewModel, LoginViewModel>();
             services.AddTransient<IRegisterViewModel, RegisterViewModel>();
+            services.AddTransient<IDashboardViewModel, DashboardViewModel>();
+            services.AddTransient<IAdminViewModel, AdminViewModel>();
+            services.AddTransient<IStandardViewModel, StandardViewModel>();
         }
 
         public static void InjectViews(this ServiceCollection services)
         {
+            services.AddSingleton<IViewFactory, ViewFactory>();
             services.AddSingleton<LoginView>();
             services.AddTransient<RegisterView>();
+            services.AddTransient<DashboardView>();
+            services.AddTransient<AdminView>();
+            services.AddTransient<StandardView>();
         }
     }
 }

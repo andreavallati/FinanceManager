@@ -4,7 +4,7 @@ using FinanceManager.Shared.Extensions;
 using FinanceManager.WPF.Application.Interfaces.Services.Factory;
 using FinanceManager.WPF.Application.Services;
 using FinanceManager.WPF.Domain.Models;
-using FinanceManager.WPF.Presentation.Interfaces;
+using FinanceManager.WPF.Presentation.Interfaces.ViewModels;
 using FinanceManager.WPF.Presentation.ViewModels.Base;
 using FinanceManager.WPF.Presentation.Views;
 using FinanceManager.WPF.Resources;
@@ -28,8 +28,7 @@ namespace FinanceManager.WPF.Presentation.ViewModels
         private RegistrationStatus _registrationStatus;
         private string _registrationMessage = string.Empty;
 
-        public RegisterViewModel(IServiceProvider serviceProvider,
-                                 IFactoryUIService factoryUIService,
+        public RegisterViewModel(IFactoryUIService factoryUIService,
                                  IValidator<RegisterViewModel> validator,
                                  ILogger<RegisterViewModel> logger) : base(factoryUIService, validator)
         {

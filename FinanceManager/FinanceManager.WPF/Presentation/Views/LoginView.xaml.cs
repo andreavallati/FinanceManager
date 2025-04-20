@@ -1,5 +1,5 @@
 ﻿using FinanceManager.WPF.Application.Interfaces.Validation;
-using FinanceManager.WPF.Presentation.Interfaces;
+using FinanceManager.WPF.Presentation.Interfaces.ViewModels;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Data;
