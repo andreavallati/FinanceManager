@@ -1,7 +1,6 @@
 ﻿using FinanceManager.API.Application.Interfaces.Authentication;
 using FinanceManager.API.Application.Interfaces.Services;
 using FinanceManager.Shared.Application.Requests;
-using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceManager.API.Presentation.Controller
@@ -26,34 +25,6 @@ namespace FinanceManager.API.Presentation.Controller
             var token = _tokenGenerator.GenerateToken(user);
 
             return Ok(token);
-        }
-
-        [Authorize]
-        [HttpGet("protected")]
-        public IActionResult ProtectedEndpoint()
-        {
-            return Ok("You are authenticated!");
-        }
-
-        [Authorize(Roles = "Admin")]
-        [HttpGet("admin")]
-        public IActionResult AdminEndpoint()
-        {
-            return Ok("Hello, Admin!");
-        }
-
-        [Authorize(Policy = "AdminPolicy")]
-        [HttpGet("admin-policy-secured")]
-        public IActionResult AdminPolicySecuredEndpoint()
-        {
-            return Ok("Secured with Admin Policy");
-        }
-
-        [Authorize(Policy = "StandardPolicy")]
-        [HttpGet("user-policy-secured")]
-        public IActionResult UserPolicySecuredEndpoint()
-        {
-            return Ok("Secured with User Policy");
         }
     }
 }

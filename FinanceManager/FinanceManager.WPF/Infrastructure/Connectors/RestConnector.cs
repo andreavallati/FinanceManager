@@ -21,6 +21,8 @@ namespace FinanceManager.WPF.Infrastructure.Connectors
         public async Task<ApiResponseItem<TResult>> GetModelAsync<TResult>(string endpoint)
         {
             var request = new RestRequest(endpoint, Method.Get);
+            IncludeAuthorization(request);
+
             var response = await _restClient.ExecuteAsync(request);
             return HandleHttpItemResponse<TResult>(response);
         }
@@ -28,6 +30,8 @@ namespace FinanceManager.WPF.Infrastructure.Connectors
         public async Task<ApiResponseItems<TResult>> GetModelsAsync<TResult>(string endpoint)
         {
             var request = new RestRequest(endpoint, Method.Get);
+            IncludeAuthorization(request);
+
             var response = await _restClient.ExecuteAsync(request);
             return HandleHttpItemsResponse<TResult>(response);
         }
@@ -71,6 +75,8 @@ namespace FinanceManager.WPF.Infrastructure.Connectors
         public async Task<ApiResponseItem<TResult>> DeleteModelAsync<TResult>(string endpoint)
         {
             var request = new RestRequest(endpoint, Method.Delete);
+            IncludeAuthorization(request);
+
             var response = await _restClient.ExecuteAsync(request);
             return HandleHttpItemResponse<TResult>(response);
         }
@@ -78,6 +84,8 @@ namespace FinanceManager.WPF.Infrastructure.Connectors
         public async Task<ApiResponseItems<TResult>> DeleteModelsAsync<TResult>(string endpoint)
         {
             var request = new RestRequest(endpoint, Method.Delete);
+            IncludeAuthorization(request);
+
             var response = await _restClient.ExecuteAsync(request);
             return HandleHttpItemsResponse<TResult>(response);
         }
@@ -88,13 +96,18 @@ namespace FinanceManager.WPF.Infrastructure.Connectors
             var request = new RestRequest(endpoint, method);
             request.AddJsonBody(jsonBody);
 
+            IncludeAuthorization(request);
+
+            return request;
+        }
+
+        private static void IncludeAuthorization(RestRequest request)
+        {
             // Add Authorization if user is authenticated
             if (SessionManager.IsAuthenticated)
             {
                 request.AddHeader("Authorization", $"Bearer {SessionManager.Token}");
             }
-
-            return request;
         }
 
         private static ApiResponseItem<TResult> HandleHttpItemResponse<TResult>(RestResponse response)

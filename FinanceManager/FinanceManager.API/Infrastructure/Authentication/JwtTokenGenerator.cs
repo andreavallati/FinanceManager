@@ -30,7 +30,7 @@ namespace FinanceManager.API.Infrastructure.Authentication
             var claims = new[]
             {
                 new Claim(ClaimTypes.Name, user.Email ?? string.Empty),
-                new Claim(ClaimTypes.Role, nameof(user.Role))
+                new Claim(ClaimTypes.Role, user.Role.ToString())
             };
 
             var key = new SymmetricSecurityKey(Encoding.UTF8.GetBytes(_clientSecret));

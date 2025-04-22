@@ -153,7 +153,7 @@ namespace FinanceManager.WPF.Presentation.ViewModels
                 };
 
                 var apiResponse = await _factoryUIService.CreateUIService<UserUIService>()
-                                                         .InsertAsync(user);
+                                                         .RegisterAsync(user);
 
                 if (!apiResponse.IsSuccess)
                 {

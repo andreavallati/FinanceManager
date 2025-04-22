@@ -26,7 +26,7 @@ namespace FinanceManager.API.Infrastructure.Middlewares
         {
             var endpoint = httpContext.Request.Path.Value;
 
-            // Bypass token validation for /api/auth/login and /api/users
+            // Bypass token validation for /api/auth/login and /api/users/register
             if (endpoint is not null && IsTokenNotRequired(endpoint))
             {
                 await _next(httpContext);

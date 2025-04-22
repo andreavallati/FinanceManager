@@ -43,7 +43,8 @@ namespace FinanceManager.API.Infrastructure.Repositories.Base
             entity.CreationDate = DateTime.UtcNow.ToLocalTime();
             entity.CreationUser = Common.CreationUsername;
 
-            var insertResult = await _context.Set<TEntity>().AddAsync(entity);
+            var table = GetTable();
+            var insertResult = await table.AddAsync(entity);
             return insertResult.Entity;
         }
 
@@ -64,10 +65,11 @@ namespace FinanceManager.API.Infrastructure.Repositories.Base
 
         public virtual async Task DeleteAsync(long id)
         {
+            var table = GetTable();
             var entity = await GetByIdAsync(id);
             if (entity is not null)
             {
-                _context.Set<TEntity>().Remove(entity);
+                table.Remove(entity);
             }
         }
 

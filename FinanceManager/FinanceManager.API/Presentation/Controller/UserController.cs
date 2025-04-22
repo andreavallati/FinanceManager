@@ -1,5 +1,6 @@
 ﻿using FinanceManager.API.Application.Interfaces.Services;
 using FinanceManager.Shared.Application.Dtos;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace FinanceManager.API.Presentation.Controller
@@ -15,7 +16,15 @@ namespace FinanceManager.API.Presentation.Controller
             _userService = userService ?? throw new ArgumentNullException(nameof(userService));
         }
 
-        [HttpPost]
+        [Authorize(Policy = "AdminPolicy")]
+        [HttpGet]
+        public async Task<IActionResult> GetUsers()
+        {
+            var result = await _userService.GetAllAsync();
+            return Ok(result);
+        }
+
+        [HttpPost("register")]
         public async Task<IActionResult> Register([FromBody] UserDto user)
         {
             var result = await _userService.InsertAsync(user);

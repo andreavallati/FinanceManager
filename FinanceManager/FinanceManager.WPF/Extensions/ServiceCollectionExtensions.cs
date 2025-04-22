@@ -26,6 +26,8 @@ namespace FinanceManager.WPF.Extensions
         {
             services.AddTransient<IValidator<LoginViewModel>, LoginValidator>();
             services.AddTransient<IValidator<RegisterViewModel>, UserValidator>();
+            services.AddTransient<IValidator<AdminViewModel>, AdminValidator>();
+            services.AddTransient<IValidator<StandardViewModel>, StandardValidator>();
         }
 
         public static void InjectUIServices(this ServiceCollection services)

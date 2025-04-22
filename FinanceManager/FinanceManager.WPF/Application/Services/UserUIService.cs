@@ -19,10 +19,17 @@ namespace FinanceManager.WPF.Application.Services
             _mapper = mapper ?? throw new ArgumentNullException(nameof(mapper));
         }
 
-        public async Task<ApiResponseItem<User>> InsertAsync(User user)
+        public async Task<ApiResponseItems<User>> GetUsersAsync()
+        {
+            var apiCall = async () => await _restConnector.GetModelsAsync<UserDto>("api/users");
+            var apiResponse = await apiCall.ProcessItemsResponse<User, UserDto>(_mapper);
+            return apiResponse;
+        }
+
+        public async Task<ApiResponseItem<User>> RegisterAsync(User user)
         {
             var model = _mapper.Map<UserDto>(user);
-            var apiCall = async () => await _restConnector.PostModelAsync<UserDto, UserDto>("api/users", model);
+            var apiCall = async () => await _restConnector.PostModelAsync<UserDto, UserDto>("api/users/register", model);
             var apiResponse = await apiCall.ProcessItemResponse<User, UserDto>(_mapper);
             return apiResponse;
         }

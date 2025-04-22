@@ -26,9 +26,7 @@
                        HorizontalAlignment="Center"
                        Style="{StaticResource MaterialDesignButtonTextBlock}" />
 
-            <ContentControl Content="{Binding CurrentView}">
-
-            </ContentControl>
+            <ContentControl Content="{Binding CurrentView}" />
 
         </DockPanel>
 

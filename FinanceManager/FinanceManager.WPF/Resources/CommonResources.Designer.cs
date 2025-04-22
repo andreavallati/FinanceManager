@@ -61,6 +61,15 @@ namespace FinanceManager.WPF.Resources {
         }
         
         /// <summary>
+        ///   Looks up a localized string similar to Registered users.
+        /// </summary>
+        public static string AdminHeader {
+            get {
+                return ResourceManager.GetString("AdminHeader", resourceCulture);
+            }
+        }
+        
+        /// <summary>
         ///   Looks up a localized string similar to Email.
         /// </summary>
         public static string Email {
@@ -129,6 +138,15 @@ namespace FinanceManager.WPF.Resources {
         public static string Role {
             get {
                 return ResourceManager.GetString("Role", resourceCulture);
+            }
+        }
+        
+        /// <summary>
+        ///   Looks up a localized string similar to User transactions.
+        /// </summary>
+        public static string StandardHeader {
+            get {
+                return ResourceManager.GetString("StandardHeader", resourceCulture);
             }
         }
         
