@@ -11,9 +11,12 @@ This project serves as both a scalable foundation and a practical sample for bui
 - Client application using WPF, MVVM pattern, and responsive, modern UI using MaterialDesignInXAML Toolkit.
 - User registration mechanism with role assignment, form validation, and feedback.
 - Secure login with JWT token generation, token handling and usage across UI service layers.
+- Custom authorization policies and handlers for role-based API access.
+- In-memory session management for authenticated users.
 - RESTful API integration. Implementation of asynchronous communication using RestSharp, with model mapping via AutoMapper.
 - Entity Framework for database management
 - Robust validation logic with FluentValidation and INotifyDataErrorInfo, with real-time UI error feedback.
+- Graceful error handling across both API and client layers.
 - Dependency injection for service management
 
 ## Technologies Used
@@ -54,11 +57,25 @@ FinanceManager/
 │   ├── Helpers/                             # Common utility classes
 ```
 
+## Authentication Flow
+- JWT token is issued at login and stored in memory using a session manager.
+- Token is automatically injected into every authorized request via UI service layer.
+- APIs are protected with `[Authorize(Policy = ...)]` using ASP.NET Core Authorization..
+- A custom `IAuthorizationMiddlewareResultHandler` returns uniform JSON messages for unauthorized access
+
 ## API Endpoints
-| Method    | Endpoint                  | Description                                          |
-|-----------|---------------------------|------------------------------------------------------|
-| POST      | /api/auth/login           | Authenticate the user and generates the Access Token |
-| POST      | /api/users                | Register new user in the system                      |
+| Method    | Endpoint                   | Description                                          | Authorization Policy |
+|-----------|----------------------------|------------------------------------------------------|----------------------|
+| POST      | /api/auth/login            | Authenticate the user and generates the Access Token | N/A                  |
+| GET       | /api/users                 | Fetch all users registered in the system             | AdminPolicy          |
+| POST      | /api/users/register        | Register new user in the system                      | N/A                  |
+| GET       | /api/transactions/{userId} | Fetch all transactions of a specific user            | StandardPolicy       |
+
+## Error Handling Strategy
+- API errors return consistent `ErrorResponse` models with messages and status codes.
+- ViewModels react to failed requests by setting `ErrorMessage` to a user-readable value.
+- FluentValidation gives real-time form feedback via `INotifyDataErrorInfo`.
+- Logging captures client and server errors via injected `ILogger<T>`.
 
 ## Installation
 ### Prerequisites
@@ -80,7 +97,12 @@ FinanceManager/
    "DefaultConnection": "Server=(localdb)\\YourInstance;Database=YourDatabase;Trusted_Connection=True;"
    "ClientSecret": "YourClientSecret"
    ```
-
+4. Initialize EF database:
+   ```sh
+   Add-Migration First migration
+   Update-Database
+   ```
+   
 ## Usage
 1. Run the API project:
    ```sh
