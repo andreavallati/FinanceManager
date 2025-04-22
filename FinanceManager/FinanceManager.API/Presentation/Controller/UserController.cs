@@ -18,14 +18,14 @@ namespace FinanceManager.API.Presentation.Controller
 
         [Authorize(Policy = "AdminPolicy")]
         [HttpGet]
-        public async Task<IActionResult> GetUsers()
+        public async Task<IActionResult> GetAllAsync()
         {
             var result = await _userService.GetAllAsync();
             return Ok(result);
         }
 
         [HttpPost("register")]
-        public async Task<IActionResult> Register([FromBody] UserDto user)
+        public async Task<IActionResult> RegisterAsync([FromBody] UserDto user)
         {
             var result = await _userService.InsertAsync(user);
             return Ok(result);

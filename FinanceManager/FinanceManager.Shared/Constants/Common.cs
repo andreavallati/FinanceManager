@@ -9,6 +9,7 @@
         public const string ModificationUsername = "user.name@mail.com";
         public const string GenericErrorMessage = "An unexpected error occurred";
         public const string GenericValidationMessage = "Validation failed";
+        public const string GenericAuthorizationMessage = "You are not authorized to perform this action";
         public const int WindowClosingDelay = 2000;
     }
 }

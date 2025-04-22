@@ -3,8 +3,8 @@
              xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
              xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
-             xmlns:res="clr-namespace:FinanceManager.WPF.Resources"
              xmlns:vm="clr-namespace:FinanceManager.WPF.Presentation.ViewModels"
+             xmlns:res="clr-namespace:FinanceManager.WPF.Resources"
              mc:Ignorable="d"
              d:DataContext="{d:DesignInstance Type=vm:StandardViewModel}">
 
@@ -12,6 +12,7 @@
         <Grid.RowDefinitions>
             <RowDefinition Height="Auto" />
             <RowDefinition Height="*" />
+            <RowDefinition Height="Auto" />
         </Grid.RowDefinitions>
 
         <TextBlock Text="{x:Static res:CommonResources.StandardHeader}"
@@ -43,27 +44,52 @@
 
                 <DataGrid.Columns>
 
-                    <DataGridTextColumn Header="Name"
+                    <DataGridTextColumn Header="Amount"
                                         Width="*"
-                                        Binding="{Binding Name}" />
+                                        Binding="{Binding Amount}" />
 
-                    <DataGridTextColumn Header="Email"
+                    <DataGridTextColumn Header="Type"
                                         Width="*"
-                                        Binding="{Binding Email}" />
+                                        Binding="{Binding Type}" />
 
-                    <DataGridTextColumn Header="Password"
+                    <DataGridTextColumn Header="Category"
                                         Width="*"
-                                        Binding="{Binding Password}" />
+                                        Binding="{Binding Category}" />
 
-                    <DataGridTextColumn Header="Role"
+                    <DataGridTextColumn Header="Notes"
                                         Width="*"
-                                        Binding="{Binding Role}" />
+                                        Binding="{Binding Notes}" />
+
+                    <DataGridTextColumn Header="Date"
+                                        Width="*"
+                                        Binding="{Binding Date}" />
 
                 </DataGrid.Columns>
 
             </DataGrid>
 
         </Border>
+
+        <!-- Error Message -->
+        <TextBlock Text="{Binding ErrorMessage, Mode=TwoWay}"
+                   Foreground="IndianRed"
+                   Grid.Row="2"
+                   Margin="0,12,0,12"
+                   VerticalAlignment="Center"
+                   HorizontalAlignment="Center">
+            <TextBlock.Style>
+                <Style BasedOn="{StaticResource MaterialDesignButtonTextBlock}"
+                       TargetType="{x:Type TextBlock}">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding ErrorMessage}"
+                                     Value="{x:Null}">
+                            <Setter Property="Visibility"
+                                    Value="Collapsed"></Setter>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </TextBlock.Style>
+        </TextBlock>
 
     </Grid>
 

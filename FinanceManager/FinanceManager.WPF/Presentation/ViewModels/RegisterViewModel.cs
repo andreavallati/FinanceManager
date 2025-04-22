@@ -157,18 +157,18 @@ namespace FinanceManager.WPF.Presentation.ViewModels
 
                 if (!apiResponse.IsSuccess)
                 {
+                    _logger.LogError($"RegisterAsync() error: {{message}}", apiResponse.ErrorMessage);
+
                     RegistrationMessage = apiResponse.ErrorMessage ?? string.Empty;
                     RegistrationStatus = RegistrationStatus.Failure;
-
-                    _logger.LogError($"RegisterAsync() error: {{message}}", apiResponse.ErrorMessage);
 
                     return;
                 }
 
+                _logger.LogInformation($"RegisterAsync() properly terminated");
+
                 RegistrationMessage = CommonResources.RegistrationSuccess;
                 RegistrationStatus = RegistrationStatus.Success;
-
-                _logger.LogInformation($"RegisterAsync() properly terminated");
 
                 await Task.Delay(Common.WindowClosingDelay);
 
@@ -178,10 +178,10 @@ namespace FinanceManager.WPF.Presentation.ViewModels
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, $"RegisterAsync() exception: {{message}}", ex.Message);
+
                 RegistrationMessage = CommonResources.GenericError;
                 RegistrationStatus = RegistrationStatus.Failure;
-
-                _logger.LogError(ex, $"RegisterAsync() exception: {{message}}", ex.Message);
             }
         }
 

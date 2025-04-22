@@ -35,6 +35,7 @@ namespace FinanceManager.WPF.Extensions
             services.AddSingleton<IFactoryUIService, FactoryUIService>();
             services.AddTransient<AuthUIService>();
             services.AddTransient<UserUIService>();
+            services.AddTransient<TransactionUIService>();
         }
 
         public static void InjectViewModels(this ServiceCollection services)

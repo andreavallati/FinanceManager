@@ -7,7 +7,7 @@ namespace FinanceManager.WPF.Application.Validation
     {
         public StandardValidator()
         {
-
+            // Eventually implement validation rules
         }
     }
 }

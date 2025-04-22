@@ -50,6 +50,7 @@ namespace FinanceManager.API.Extensions
             });
 
             builder.Services.AddSingleton<IAuthorizationHandler, RoleAuthorizationHandler>();
+            builder.Services.AddSingleton<IAuthorizationMiddlewareResultHandler, CustomAuthorizationResultHandler>();
         }
 
         public static void InjectConfig(this WebApplicationBuilder builder)
@@ -74,11 +75,13 @@ namespace FinanceManager.API.Extensions
         public static void InjectServices(this IServiceCollection services)
         {
             services.AddTransient<IUserService, UserService>();
+            services.AddTransient<ITransactionService, TransactionService>();
         }
 
         public static void InjectRepositories(this IServiceCollection services)
         {
             services.AddTransient<IUserRepository, UserRepository>();
+            services.AddTransient<ITransactionRepository, TransactionRepository>();
         }
     }
 }

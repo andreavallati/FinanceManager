@@ -5,7 +5,7 @@ namespace FinanceManager.WPF.Application.Interfaces.Services
 {
     public interface IUserUIService
     {
-        Task<ApiResponseItems<User>> GetUsersAsync();
+        Task<ApiResponseItems<User>> GetAllAsync();
         Task<ApiResponseItem<User>> RegisterAsync(User user);
     }
 }

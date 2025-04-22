@@ -10,9 +10,7 @@ using FluentValidation;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Logging;
 using Prism.Commands;
-using System.Windows;
 using System.Windows.Input;
-using BaseApplication = System.Windows.Application;
 
 namespace FinanceManager.WPF.Presentation.ViewModels
 {
@@ -102,11 +100,10 @@ namespace FinanceManager.WPF.Presentation.ViewModels
 
                 if (!apiResponse.IsSuccess)
                 {
-                    ErrorMessage = apiResponse.ErrorMessage ?? string.Empty;
-                    IsLoginFailed = true;
-
                     _logger.LogError($"LoginAsync() error: {{message}}", apiResponse.ErrorMessage);
 
+                    ErrorMessage = apiResponse.ErrorMessage ?? string.Empty;
+                    IsLoginFailed = true;
                     return;
                 }
 
@@ -115,24 +112,20 @@ namespace FinanceManager.WPF.Presentation.ViewModels
                                           apiResponse.Item?.Username ?? string.Empty,
                                           apiResponse.Item?.Role ?? Shared.Enums.UserRole.Standard);
 
-                ErrorMessage = string.Empty;
-                IsLoginFailed = false;
-
                 var dashboardView = _serviceProvider.GetRequiredService<DashboardView>();
-                dashboardView.Show();
-
-                BaseApplication.Current.Windows.OfType<Window>()
-                                               .FirstOrDefault(w => w is LoginView)?
-                                               .Close();
+                dashboardView.ShowDialog();
 
                 _logger.LogInformation($"LoginAsync() properly terminated");
+
+                ErrorMessage = string.Empty;
+                IsLoginFailed = false;
             }
             catch (Exception ex)
             {
+                _logger.LogError(ex, $"LoginAsync() exception: {{message}}", ex.Message);
+
                 ErrorMessage = CommonResources.GenericError;
                 IsLoginFailed = true;
-
-                _logger.LogError(ex, $"LoginAsync() exception: {{message}}", ex.Message);
             }
         }
 
@@ -154,9 +147,9 @@ namespace FinanceManager.WPF.Presentation.ViewModels
             }
             catch (Exception ex)
             {
-                ErrorMessage = CommonResources.GenericError;
-
                 _logger.LogError(ex, $"Register() exception: {{message}}", ex.Message);
+
+                ErrorMessage = CommonResources.GenericError;
             }
         }
 

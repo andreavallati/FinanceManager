@@ -19,7 +19,7 @@ namespace FinanceManager.API.Presentation.Controller
         }
 
         [HttpPost("login")]
-        public async Task<IActionResult> Login([FromBody] LoginRequest request)
+        public async Task<IActionResult> LoginAsync([FromBody] LoginRequest request)
         {
             var user = await _userService.GetByLoginInfoAsync(request.Email, request.Password);
             var token = _tokenGenerator.GenerateToken(user);
