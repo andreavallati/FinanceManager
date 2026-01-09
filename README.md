@@ -5,6 +5,8 @@ FinanceManager is a modular, extensible WPF desktop application built with clean
 
 This project serves as both a scalable foundation and a practical sample for building real-world enterprise desktop applications with a layered architecture.
 
+---
+
 ## Features
 - Follows Clean Architecture principles
 - Modular structure with clear separation of concerns between ViewModels, Services, Models, and external components
@@ -19,6 +21,8 @@ This project serves as both a scalable foundation and a practical sample for bui
 - Graceful error handling across both API and client layers.
 - Dependency injection for service management
 
+---
+
 ## Technologies Used
 - .NET Core
 - Entity Framework Core
@@ -29,6 +33,8 @@ This project serves as both a scalable foundation and a practical sample for bui
 - AutoMapper for automatic model mapping
 - System.Text.Json for Serialization / Deserialization
 - FluentValidation and INotifyDataErrorInfo for validation handling
+
+---
 
 ## Project Structure
 ```
@@ -57,11 +63,15 @@ FinanceManager/
 │   ├── Helpers/                             # Common utility classes
 ```
 
+---
+
 ## Authentication Flow
 - JWT token is issued at login and stored in memory using a session manager.
 - Token is automatically injected into every authorized request via UI service layer.
 - APIs are protected with `[Authorize(Policy = ...)]` using ASP.NET Core Authorization..
 - A custom `IAuthorizationMiddlewareResultHandler` returns uniform JSON messages for unauthorized access
+
+---
 
 ## API Endpoints
 | Method    | Endpoint                   | Description                                          | Authorization Policy |
@@ -71,11 +81,15 @@ FinanceManager/
 | POST      | /api/users/register        | Register new user in the system                      | N/A                  |
 | GET       | /api/transactions/{userId} | Fetch all transactions of a specific user            | StandardPolicy       |
 
+---
+
 ## Error Handling Strategy
 - API errors return consistent `ErrorResponse` models with messages and status codes.
 - ViewModels react to failed requests by setting `ErrorMessage` to a user-readable value.
 - FluentValidation gives real-time form feedback via `INotifyDataErrorInfo`.
 - Logging captures client and server errors via injected `ILogger<T>`.
+
+---
 
 ## Installation
 ### Prerequisites
@@ -109,3 +123,11 @@ FinanceManager/
    dotnet run --project FinanceManager.Api
    ```
 2. Run the client application in Visual Studio.
+
+---
+
+<div align="center">
+
+**Happy Coding!**
+
+</div>
