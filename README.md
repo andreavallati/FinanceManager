@@ -24,43 +24,79 @@ This project serves as both a scalable foundation and a practical sample for bui
 ---
 
 ## Technologies Used
-- .NET Core
-- Entity Framework Core
-- ASP.NET Core Web API
-- ASP.NET Core Authorization for user roles management
-- WPF with MVVM Pattern and MaterialDesignInXAML Toolkit for Client
-- RestSharp for APIs consuming
-- AutoMapper for automatic model mapping
-- System.Text.Json for Serialization / Deserialization
-- FluentValidation and INotifyDataErrorInfo for validation handling
+
+### Backend (API)
+- **.NET 8** - Latest .NET framework
+- **ASP.NET Core 8** - Web API framework
+- **Entity Framework Core 8** - ORM for SQL Server
+- **SQL Server** - Database
+- **JWT Authentication** - Secure token-based auth
+- **FluentValidation** - Validation framework
+- **AutoMapper** - Object-to-object mapping
+- **Swashbuckle** - Swagger/OpenAPI documentation
+
+### Frontend (WPF)
+- **.NET 8** - Windows desktop framework
+- **WPF** - Windows Presentation Foundation
+- **Prism.Wpf** - MVVM framework and commands
+- **MaterialDesignThemes** - Material Design UI components
+- **RestSharp** - REST API client
+- **FluentValidation** - Client-side validation
+- **AutoMapper** - DTO mapping
+
+### Shared
+- **.NET 8 Standard** - Cross-platform compatibility
+- **System.Text.Json** - JSON serialization
+
+### Design Patterns & Principles
+
+- **MVVM Pattern**: Full Model-View-ViewModel implementation in WPF
+- **Repository Pattern**: Data access abstraction with generic base repository
+- **Factory Pattern**: Service and View factories for flexible instantiation
+- **Dependency Injection**: Microsoft.Extensions.DependencyInjection throughout
+- **SOLID Principles**: Single responsibility, interface segregation, dependency inversion
+- **Clean Architecture**: Separation of concerns with layered approach
 
 ---
 
 ## Project Structure
 ```
 FinanceManager/
-├── FinanceManager.Api/                      # API Layer
-│   ├── Application/                         # Business logic, authorization, mappings and validation
-│   ├── Domain/                              # Core domain entities
-│   ├── Extensions/                          # Extension methods
-│   ├── Infrastructure/                      # Data access, authentication, middlewares and repositories
-│   ├── Presentation/                        # Controllers and endpoints
-├── FinanceManager.WPF/                      # Client application (if applicable)
-│   ├── Application/                         # Business logic, mappings and validation
-│   ├── Converters/                          # WPF converters
-│   ├── Domain/                              # Client models
-│   ├── Extensions/                          # Extension methods
-│   ├── Infrastructure/                      # API communication layer
-│   ├── Presentation/                        # WPF Views and ViewModels
-│   ├── Resources/                           # UI common resources
-│   ├── ViewResources/                       # UI common styles
-├── FinanceManager.Shared/                   # Shared utilities and models
-│   ├── Application/                         # DTOs, POCO models and configuration settings
-│   ├── Constants/                           # Constants
-│   ├── Enums/                               # Enumerations
-│   ├── Exceptions/                          # Custom exceptions
-│   ├── Extensions/                          # Extension methods
-│   ├── Helpers/                             # Common utility classes
+├── FinanceManager.API/          # ASP.NET Core Web API
+│   ├── Application/             # Business logic & interfaces
+│   │   ├── Services/            # Business services
+│   │   ├── Validation/          # FluentValidation validators
+│   │   ├── Authorization/       # Custom authorization handlers
+│   │   └── Mapping/             # AutoMapper profiles
+│   ├── Domain/                  # Entities & business models
+│   │   └── Entities/            # User, Transaction entities
+│   ├── Infrastructure/          # External dependencies
+│   │   ├── Context/             # Entity Framework DbContext
+│   │   ├── Repositories/        # Data access layer
+│   │   ├── Authentication/      # JWT token generation
+│   │   └── Middlewares/         # Exception & JWT middleware
+│   └── Presentation/            # API Controllers
+│
+├── FinanceManager.WPF/          # WPF Desktop Application
+│   ├── Application/             # Application services
+│   │   ├── Services/            # UI service implementations
+│   │   ├── Validation/          # Client-side validators
+│   │   └── Mapping/             # AutoMapper profiles
+│   ├── Domain/                  # Client-side models
+│   ├── Infrastructure/          # Infrastructure concerns
+│   │   └── Connectors/          # REST API connectors
+│   ├── Presentation/            # MVVM components
+│   │   ├── ViewModels/          # View models with validation
+│   │   ├── Views/               # XAML views
+│   │   └── Interfaces/          # Abstraction contracts
+│   └── Extensions/              # Dependency injection setup
+│
+└── FinanceManager.Shared/       # Shared library
+    ├── Application/             # DTOs, Requests, Responses
+    ├── Enums/                   # UserRole, TransactionType
+    ├── Exceptions/              # Custom exception hierarchy
+    ├── Constants/               # Application constants
+    └── Helpers/                 # JSON serialization helpers
 ```
 
 ---
@@ -93,36 +129,56 @@ FinanceManager/
 
 ## Installation
 ### Prerequisites
-- .NET SDK 6.0 or later
-- SQL Server (if using database authentication)
+
+- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
+- [SQL Server](https://www.microsoft.com/sql-server) (LocalDB, Express, or higher)
+- [Visual Studio 2022](https://visualstudio.microsoft.com/) or [JetBrains Rider](https://www.jetbrains.com/rider/)
+- Windows 10/11 (for WPF application)
 
 ### Steps
-1. Clone the repository:
-   ```sh
-   git clone <repository-url>
+
+1. **Clone the repository**
+   ```bash
+   git clone https://github.com/andreavallati/FinanceManager.git
    cd FinanceManager
    ```
-2. Install dependencies:
-   ```sh
-   dotnet restore
-   ```
-3. Modify `appsettings.json` to set a ClientSecret for JWT authentication and the correct connection string for SQL Server:
-   ```sh
-   "DefaultConnection": "Server=(localdb)\\YourInstance;Database=YourDatabase;Trusted_Connection=True;"
-   "ClientSecret": "YourClientSecret"
-   ```
-4. Initialize EF database:
-   ```sh
-   Add-Migration First migration
-   Update-Database
-   ```
+
+2. **Configure the database connection**
    
-## Usage
-1. Run the API project:
-   ```sh
-   dotnet run --project FinanceManager.Api
+   Update `appsettings.json` in `FinanceManager.API`:
+   ```json
+   {
+     "ConnectionStrings": {
+       "DefaultConnection": "Server=(localdb)\\mssqllocaldb;Database=FinanceManagerDb;Trusted_Connection=true;"
+     }
+   }
    ```
-2. Run the client application in Visual Studio.
+
+3. **Apply database migrations**
+   ```bash
+   cd FinanceManager.API
+   dotnet ef database update
+   ```
+
+4. **Build the solution**
+   ```bash
+   dotnet build
+   ```
+
+5. **Run the API**
+   ```bash
+   cd FinanceManager.API
+   dotnet run
+   ```
+   The API will be available at `https://localhost:7258`
+
+6. **Run the WPF application**
+   
+   In a separate terminal:
+   ```bash
+   cd FinanceManager.WPF
+   dotnet run
+   ```
 
 ---
 
